@@ -1,13 +1,20 @@
+import React, { FormEvent } from 'react';
 import { Container, Typography } from '@material-ui/core';
-import React from 'react';
 import './App.scss';
 import FormularioCadastro from './components/formulario-cadastro';
+import { IPessoa } from './interfaces/pessoa.interface';
 
 function App() {
+
+  const sumbitForm = (pessoa: IPessoa) => {
+    console.log('Formulário enviado');
+    console.log(pessoa);
+  }
+
   return (
     <Container component="article" maxWidth="sm">
       <Typography variant="h3" component="h1" align="center">Formulário de Cadastro</Typography>
-      <FormularioCadastro />
+      <FormularioCadastro onSubmit={sumbitForm} />
     </Container>
   );
 }

@@ -1,21 +1,26 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FormEvent, FunctionComponent, useState } from "react";
 import { Button, TextField, Switch, FormControlLabel } from "@material-ui/core";
+import { IPessoa } from "../../interfaces/pessoa.interface";
 
 interface FormularioProps {
-  
+  onSubmit: (pessoa: IPessoa) => void;
 }
  
-const FormularioCadastro: FunctionComponent<FormularioProps> = () => {
+const FormularioCadastro: FunctionComponent<FormularioProps> = ({onSubmit}) => {
 
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [cpf, setCpf] = useState('');
+  const [promocoes, setPromocoes] = useState(true);
+  const [novidades, setNovidades] = useState(true);
+
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onSubmit({nome, sobrenome, cpf, promocoes, novidades});
+  }
 
   return (
-    <form onSubmit={event => {
-      event.preventDefault();
-      console.log(nome, sobrenome);
-      }}>
+    <form onSubmit={event => handleFormSubmit(event)}>
       <TextField id="nome" 
         value={nome}
         onChange={event => setNome(event.target.value)}
@@ -34,7 +39,9 @@ const FormularioCadastro: FunctionComponent<FormularioProps> = () => {
         fullWidth 
       />
 
-      <TextField id="cpf" 
+      <TextField id="cpf"
+        value={cpf}
+        onChange={event => setCpf(event.target.value)} 
         label="CPF" 
         variant="outlined" 
         margin="normal" 
@@ -45,7 +52,8 @@ const FormularioCadastro: FunctionComponent<FormularioProps> = () => {
         control={
           <Switch name="promocoes" 
             color="primary" 
-            defaultChecked={true} 
+            checked={promocoes}
+            onChange={event => setPromocoes(event.target.checked)}
           />
         }
       />
@@ -54,7 +62,8 @@ const FormularioCadastro: FunctionComponent<FormularioProps> = () => {
         control={
           <Switch name="novidades" 
             color="primary" 
-            defaultChecked={true}
+            checked={novidades}
+            onChange={event => setNovidades(event.target.checked)}
           />
         }
       />
