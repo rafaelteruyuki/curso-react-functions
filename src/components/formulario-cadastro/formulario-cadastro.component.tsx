@@ -1,18 +1,21 @@
 import React, { FormEvent, FunctionComponent, useState } from "react";
 import { Button, TextField, Switch, FormControlLabel } from "@material-ui/core";
 import { IPessoa } from "../../interfaces/pessoa.interface";
+import { IErro, IErrosFormulario } from "../../interfaces/erros-formulario.interface";
 
 interface FormularioProps {
   onSubmit: (pessoa: IPessoa) => void;
+  validaCPF: (cpf: string) => IErro;
 }
  
-const FormularioCadastro: FunctionComponent<FormularioProps> = ({onSubmit}) => {
+const FormularioCadastro: FunctionComponent<FormularioProps> = ({onSubmit, validaCPF}) => {
 
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [cpf, setCpf] = useState('');
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
+  const [erros, setErros] = useState<IErrosFormulario>({cpf: {valido: true, texto: ''}});
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -41,7 +44,10 @@ const FormularioCadastro: FunctionComponent<FormularioProps> = ({onSubmit}) => {
 
       <TextField id="cpf"
         value={cpf}
-        onChange={event => setCpf(event.target.value)} 
+        onChange={event => setCpf(event.target.value)}
+        onBlur={event => setErros({cpf: validaCPF(event.target.value)})}
+        error={!erros.cpf.valido}
+        helperText={erros.cpf.texto}
         label="CPF" 
         variant="outlined" 
         margin="normal" 
