@@ -10,6 +10,8 @@ const FormularioCadastro: FunctionComponent<FormularioProps> = () => {
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [cpf, setCpf] = useState('');
+  const [promocoes, setPromocoes] = useState(true);
+  const [novidades, setNovidades] = useState(true);
 
   return (
     <form onSubmit={event => {
@@ -34,7 +36,9 @@ const FormularioCadastro: FunctionComponent<FormularioProps> = () => {
         fullWidth 
       />
 
-      <TextField id="cpf" 
+      <TextField id="cpf"
+        value={cpf}
+        onChange={event => setCpf(event.target.value)} 
         label="CPF" 
         variant="outlined" 
         margin="normal" 
@@ -45,7 +49,8 @@ const FormularioCadastro: FunctionComponent<FormularioProps> = () => {
         control={
           <Switch name="promocoes" 
             color="primary" 
-            defaultChecked={true} 
+            checked={promocoes}
+            onChange={event => setPromocoes(event.target.checked)}
           />
         }
       />
@@ -54,7 +59,8 @@ const FormularioCadastro: FunctionComponent<FormularioProps> = () => {
         control={
           <Switch name="novidades" 
             color="primary" 
-            defaultChecked={true}
+            checked={novidades}
+            onChange={event => setNovidades(event.target.checked)}
           />
         }
       />
