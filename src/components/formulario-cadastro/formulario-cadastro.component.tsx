@@ -1,11 +1,12 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FormEvent, FunctionComponent, useState } from "react";
 import { Button, TextField, Switch, FormControlLabel } from "@material-ui/core";
+import { IPessoa } from "../../interfaces/pessoa.interface";
 
 interface FormularioProps {
-  
+  onSubmit: (pessoa: IPessoa) => void;
 }
  
-const FormularioCadastro: FunctionComponent<FormularioProps> = () => {
+const FormularioCadastro: FunctionComponent<FormularioProps> = ({onSubmit}) => {
 
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
@@ -13,11 +14,13 @@ const FormularioCadastro: FunctionComponent<FormularioProps> = () => {
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
 
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    onSubmit({nome, sobrenome, cpf, promocoes, novidades});
+  }
+
   return (
-    <form onSubmit={event => {
-      event.preventDefault();
-      console.log(nome, sobrenome);
-      }}>
+    <form onSubmit={event => handleFormSubmit(event)}>
       <TextField id="nome" 
         value={nome}
         onChange={event => setNome(event.target.value)}
