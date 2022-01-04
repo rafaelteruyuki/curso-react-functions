@@ -1,9 +1,8 @@
-import React, { FormEvent } from 'react';
-import { Container, Typography } from '@material-ui/core';
 import './App.scss';
+import { Container, Typography } from '@material-ui/core';
 import FormularioCadastro from './components/formulario-cadastro';
 import { IPessoa } from './interfaces/pessoa.interface';
-import { IErro, IErrosFormulario } from './interfaces/erros-formulario.interface';
+import { IErro,} from './interfaces/erros-formulario.interface';
 
 function App() {
 
