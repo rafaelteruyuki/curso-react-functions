@@ -1,7 +1,5 @@
 import { FunctionComponent } from "react";
-
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
+import { Button, TextField, Switch, FormControlLabel } from "@material-ui/core";
 
 interface FormularioProps {
   
@@ -10,15 +8,44 @@ interface FormularioProps {
 const FormularioCadastro: FunctionComponent<FormularioProps> = () => {
   return (
     <form>
-      <TextField id="nome" label="Nome" variant="outlined" fullWidth />
-      <TextField id="sobrenome" label="Sobrenome" variant="outlined" fullWidth />
-      <TextField id="cpf" label="CPF" variant="outlined" fullWidth />
+      <TextField id="nome" 
+        label="Nome" 
+        variant="outlined" 
+        margin="normal" 
+        fullWidth 
+      />
 
-      <label htmlFor="promocoes">Promoções</label>
-      <input id="promocoes" type="checkbox" />
+      <TextField id="sobrenome" 
+        label="Sobrenome" 
+        variant="outlined" 
+        margin="normal" 
+        fullWidth 
+      />
 
-      <label htmlFor="novidades">Novidades</label>
-      <input id="novidades" type="checkbox" />
+      <TextField id="cpf" 
+        label="CPF" 
+        variant="outlined" 
+        margin="normal" 
+        fullWidth 
+      />
+
+      <FormControlLabel label="Promoções"
+        control={
+          <Switch name="promocoes" 
+            color="primary" 
+            defaultChecked={true} 
+          />
+        }
+      />
+
+      <FormControlLabel label="Novidades" 
+        control={
+          <Switch name="novidades" 
+            color="primary" 
+            defaultChecked={true}
+          />
+        }
+      />
 
       <Button type="submit" variant="contained" color="primary">Cadastrar</Button>
     </form>
