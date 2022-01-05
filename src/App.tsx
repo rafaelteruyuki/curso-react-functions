@@ -1,14 +1,14 @@
 import './App.scss';
 import { Container, Typography } from '@material-ui/core';
 import FormularioCadastro from './components/formulario-cadastro';
-import { IPessoa } from './interfaces/pessoa.interface';
 import { IErro,} from './interfaces/erros-formulario.interface';
+import { ICadastro } from './interfaces/cadastro.interface';
 
 function App() {
 
-  const sumbitForm = (pessoa: IPessoa) => {
+  const sumbitForm = (cadastro: ICadastro) => {
     console.log('Formulário enviado');
-    console.log(pessoa);
+    console.log(cadastro);
   }
 
   const validaCPF = (cpf: string): IErro => {   
