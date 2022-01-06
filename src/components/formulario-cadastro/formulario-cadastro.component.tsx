@@ -1,20 +1,20 @@
 import { FunctionComponent, useEffect, useState } from "react";
-import { IErro } from "../../interfaces/erros-formulario.interface";
+import { Step, StepLabel, Stepper, Typography } from "@material-ui/core";
+
 import DadosPessoais from "./dados-pessoais";
 import Login from "./login";
 import Entrega from "./entrega";
+
 import { ILogin } from "../../interfaces/login.interface";
 import { IPessoa } from "../../interfaces/pessoa.interface";
 import { IEndereco } from "../../interfaces/endereco.interface";
 import { ICadastro } from "../../interfaces/cadastro.interface";
-import { Step, StepLabel, Stepper, Typography } from "@material-ui/core";
 
 interface FormularioProps {
   onSubmit: (cadastro: ICadastro) => void;
-  validaCPF: (cpf: string) => IErro;
 }
 
-const FormularioCadastro: FunctionComponent<FormularioProps> = ({ onSubmit, validaCPF }) => {
+const FormularioCadastro: FunctionComponent<FormularioProps> = ({onSubmit}) => {
   const [etapaAtual, setEtapaAtual] = useState(0);
   const [cadastro, setDatos] = useState<ICadastro>();
 
@@ -35,7 +35,7 @@ const FormularioCadastro: FunctionComponent<FormularioProps> = ({ onSubmit, vali
 
   const forms = [
     <Login onSubmit={coletarDados} />,
-    <DadosPessoais onSubmit={coletarDados} validaCPF={validaCPF} />,
+    <DadosPessoais onSubmit={coletarDados} />,
     <Entrega onSubmit={coletarDados} />,
     <Typography variant="h5" align="center">Obrigado pelo cadastro!</Typography>
   ];

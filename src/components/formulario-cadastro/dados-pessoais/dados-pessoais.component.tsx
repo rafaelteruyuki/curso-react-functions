@@ -1,25 +1,27 @@
-import { FormEvent, FunctionComponent, useState } from "react";
+import { FormEvent, FunctionComponent, useContext, useState } from "react";
 import { Button, TextField, Switch, FormControlLabel } from "@material-ui/core";
 import { IPessoa } from "../../../interfaces/pessoa.interface";
-import { IErro, IErrosFormulario } from "../../../interfaces/erros-formulario.interface";
-
+import ValidacoesDadosPessoais from "../../../contexts/validacoes-dados-pessoais.context";
+import useErros from "../../../hooks/useErros.hook";
 interface DadosPessoaisProps {
   onSubmit: (pessoa: IPessoa) => void;
-  validaCPF: (cpf: string) => IErro;
 }
  
-const DadosPessoais: FunctionComponent<DadosPessoaisProps> = ({onSubmit, validaCPF}) => {
+const DadosPessoais: FunctionComponent<DadosPessoaisProps> = ({onSubmit}) => {
+  const validacoes = useContext(ValidacoesDadosPessoais);
 
   const [nome, setNome] = useState('');
   const [sobrenome, setSobrenome] = useState('');
   const [cpf, setCpf] = useState('');
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
-  const [erros, setErros] = useState<IErrosFormulario>({cpf: {valido: true, texto: ''}});
+  const [erros, validarCampos, possoEnviar] = useErros(validacoes);
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit({nome, sobrenome, cpf, promocoes, novidades});
+    if(possoEnviar()) {
+      onSubmit({nome, sobrenome, cpf, promocoes, novidades});
+    }
   }
 
   return (
@@ -45,10 +47,11 @@ const DadosPessoais: FunctionComponent<DadosPessoaisProps> = ({onSubmit, validaC
       <TextField id="cpf"
         value={cpf}
         onChange={event => setCpf(event.target.value)}
-        onBlur={event => setErros({cpf: validaCPF(event.target.value)})}
+        onBlur={event => validarCampos(event)}
         error={!erros.cpf.valido}
         helperText={erros.cpf.texto}
-        label="CPF" 
+        label="CPF"
+        name="cpf"
         variant="outlined" 
         margin="normal" 
         fullWidth 
